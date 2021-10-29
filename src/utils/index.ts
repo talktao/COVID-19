@@ -1,5 +1,5 @@
 
-  import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // 排除value为0的情况
 export const isFalsy = (value: unknown) => value === 0 ? false : !value
 
@@ -126,3 +126,15 @@ export const useMountedRef = () => {
 	})
 	return mountedRef
  }
+
+ /**
+  * 传入一个数字，将其转为字符串并获取第一个字符
+  */
+export const useCharAt = (param?: Number | String) => {
+	if(typeof param == "string"){
+		return param.substr(0,1)
+	}else if(typeof param == "number"){
+		param = param.toString()
+		return param.substr(0,1)
+	}
+}

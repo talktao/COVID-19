@@ -1,102 +1,71 @@
-import React, {useEffect, useRef} from "react";
-import * as echarts from 'echarts';
+import React, {useState, useEffect} from "react";
+import CardInfo from "pages/home/CardInfo";
+import LocalCases from "pages/home/LocalCases"
+import { Col, Row } from "antd";
 
-const Home: React.FC =  () => {
-    const main2 = useRef(null);
-    let chartInstance = null;
+export interface PreDayProps {
+    confirm:string;
+    dead:  string;
+    importedCase: string;
+    localConfirmadd: string;
+    infect: string;
+    nowConfirm:string;
+}
 
-    let renderChart = () => {
-        const myChart = echarts.getInstanceByDom(main2.current as unknown as HTMLDivElement);
-        if(myChart)
-            chartInstance = myChart;
-        else
-            chartInstance = echarts.init(main2.current as unknown as HTMLDivElement);
-        chartInstance.setOption({
-            title: {
-                text: '燃尽图'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            legend: {
-                data: ['Remain', 'Ideal']
-            },
-            xAxis: {
-                boundaryGap: false,
-                type: 'category',
-                data: ['1-1', '1-2', '1-3', '1-5', '1-6', '1-7', '1-8', '1-9']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    name: 'Remain',
-                    data: [140, 110, 100, 90, 70, 30, 10, 0],
-                    type: 'line'
-                },
-                {
-                    name: 'Ideal',
-                    data: [140, 120, 100, 80, 60, 40, 20, 0],
-                    type: 'line'
-                }
-            ]
-        })
-    };
+export interface TotalProps {
+    confirm: number;
+    dead: number;
+    importedCase: number;
+    localConfirm: number;
+    noInfect: number;
+    nowConfirm: number
+}
 
-    let initChart = () => {
-        let element = document.getElementById('main');
-        let myChart = echarts.init(element as HTMLDivElement);
-        let option = {
-            title: {
-                text: 'ECharts 入门示例',
-            },
-            tooltip: {
-            },
-            legend: {
-                data:['销量', '利润', '比率']
-            },
-            xAxis: {
-                data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-            },
-            yAxis: {
-            },
-            series: [
-                {
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                },
-                {
-                    name: '利润',
-                    type: 'bar',
-                    data: [30, 25, 15, 20, 20, 35]
-                },
-                {
-                    name: '比率',
-                    type: 'line',
-                    data: [35, 30, 20, 25, 25, 40]
-                }]
-        };
-        myChart.setOption(option);
-    };
-    
+const Home : React.FC =  () => {
+
+    const [chinaAdd, setChinaAdd] = useState<Partial<PreDayProps>>({})  // 较昨日新增数据
+    const [chinaTotal, setChinaTotal] = useState<Partial<TotalProps>>({}) // 累计数据
+
     useEffect(() => {
-        initChart();
-        renderChart();
-    });
+        getList()
+    }, [])
 
+    const getList = async () => {
+            let url = 'https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=chinaDayList,chinaDayAddList,nowConfirmStatis,provinceCompare';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                },
+              });
+              const result = await response.json(); // 获取接口中的json数据   
+              const chinaAdd = (result.data.chinaDayAddList[result.data.chinaDayAddList.length- 1]) // 获取 chinaDayAddList 中最后一条数据
+              setChinaTotal(result.data.chinaDayList[result.data.chinaDayAddList.length- 1])  // 获取 chinaDayList 中最后一条数据
+              const data = result.data.chinaDayList.map((item:any)=>{
+                  return {
+                    confirm:item.confirm,
+                    nowConfirm: item.nowConfirm
+                  }
+              }).slice(-2) 
+              console.log(data,'data');
+              chinaAdd.confirm = data[1].confirm - data[0].confirm
+              chinaAdd.nowConfirm = data[1].nowConfirm - data[0].nowConfirm
+              setChinaAdd(chinaAdd) 
+              console.log(chinaAdd,'chinaAdd');                         
+    }
+
+    
     return(
-        <div>
-            <div id={'main'} style={{height: 400}}/>
-            <div style={{height: 400}} ref={main2}/>
-        </div>
+        <Row>
+            <Col xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:24}} xl={{span:24}} xxl={{span:24}}>
+                <CardInfo chinaAdd={chinaAdd} chinaTotal={chinaTotal} />
+                <LocalCases />
+            </Col>
+        </Row>
     );
 };
 
+
 export default Home
+
+

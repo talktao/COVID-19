@@ -22,16 +22,17 @@ const Main: React.FC = (props) => {
     return (
         <>
             <Layout>
-                <Sider ref={siderRef} trigger={null} collapsible collapsed={collapsed}>
+                <SiderStyle ref={siderRef} trigger={null} collapsible collapsed={collapsed}>
                     <CostomSider />
-                </Sider>
+                </SiderStyle>
                 <Layout style={{backgroundColor:'#fff'}}>
                     <HeaderStyle onClick={toggle} >
                         {
                             collapsed ? <SpanStyle><MenuUnfoldOutlined /></SpanStyle> : <SpanStyle><MenuFoldOutlined /></SpanStyle>
                         }
+                        <span style={{paddingLeft:'40%'}}>疫情数据展示</span>
                     </HeaderStyle>
-                    <Content style={{margin: '24px 16px',padding: 24,minHeight: 280,}}>
+                    <Content style={{padding: 24,minHeight: 280,}}>
                         {
                             location.pathname === '/' ? <Route path='/main/home' element={<Home/>} /> : <Outlet />
                         }  
@@ -55,4 +56,7 @@ const HeaderStyle = styled(Header)`
     padding-left: 10px;
     background-color: #fff;
     text-align: left;
+`
+const SiderStyle = styled(Sider)`
+    background: #b0e0e6;
 `
