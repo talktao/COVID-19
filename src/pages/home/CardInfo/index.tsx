@@ -18,7 +18,14 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
 
     return (
         <ScreenContainer>
-            <Row marginBottom={2}>截止 {toYMDHMS(time)}</Row>
+            <Row marginBottom={2} gap={2}>
+                <Col>截止 {toYMDHMS(time)}</Col>
+                <Col>
+                    <a href='https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=chinaDayList,chinaDayAddList,nowConfirmStatis,provinceCompare'>
+                        数据来源:https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list
+                    </a>
+                </Col>
+            </Row>
             <Row between={true} gap={2}>
                 <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
                     <Card style={{background:"#fffaf7"}}>
@@ -81,7 +88,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                             <span>较上日</span>
                             {
                                 useCharAt(chinaAdd.importedCase) === "-" ? <span style={{color:'#4e8be6'}}>{chinaAdd.importedCase}</span>
-                                                                        : <span style={{color:'#4e8be6'}}>+{chinaAdd.importedCase}</span>
+                                                                         : <span style={{color:'#4e8be6'}}>+{chinaAdd.importedCase}</span>
                             }
                             
                         </PreStyle>
