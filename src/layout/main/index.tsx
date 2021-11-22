@@ -23,7 +23,7 @@ const Main: React.FC = (props) => {
         <>
             <Layout>
                 <SiderStyle ref={siderRef} trigger={null} collapsible collapsed={collapsed}>
-                    <CostomSider />
+                    <CostomSider collapsed={collapsed} />
                 </SiderStyle>
                 <Layout style={{backgroundColor:'#fff'}}>
                     <HeaderStyle onClick={toggle} >
@@ -34,7 +34,7 @@ const Main: React.FC = (props) => {
                     </HeaderStyle>
                     <Content style={{padding: 24,minHeight: 280,}}>
                         {
-                            location.pathname === '/' ? <Route path='/main/home' element={<Home/>} /> : <Outlet />
+                            location.pathname === '/' ? <Route path='/main/home' element={<Home/>} /> : <Outlet />    
                         }  
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
