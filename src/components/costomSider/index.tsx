@@ -9,7 +9,11 @@ import {
 
 import styled from "@emotion/styled";
 
-const CostomSider: React.FC = () => {
+type Props = {
+    collapsed: boolean
+}
+
+const CostomSider: React.FC<Props> = ({collapsed}) => {
     
 const navigate = useNavigate();
 
@@ -18,12 +22,14 @@ const nav = (path:string) => {
 }
         return (
             <>
-                <Logo className="logo">COVID-19</Logo>
+                {
+                    collapsed ? <Logo className="logo">C-19</Logo> : <Logo className="logo">COVID-19</Logo>
+                }
                 <MenuStyle mode="inline" defaultSelectedKeys={['1']}>
                     <MenuItemStyle key="1" onClick={() => nav("/main/home")} icon={<FundOutlined />}>
                         疫情数据
                     </MenuItemStyle>
-                    <MenuItemStyle key="2" onClick={() => nav("/main/page1")} icon={<PieChartOutlined />}>
+                    <MenuItemStyle key="2" onClick={() => nav("/main/worldMap")} icon={<PieChartOutlined />}>
                         疫情分布
                     </MenuItemStyle>
                     <MenuItemStyle key="3" onClick={() => nav("/main/welcome")}  icon={<StockOutlined />}>
