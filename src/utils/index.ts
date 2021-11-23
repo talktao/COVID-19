@@ -138,3 +138,63 @@ export const useCharAt = (param?: Number | String) => {
 		return param.substr(0,1)
 	}
 }
+
+/**
+ * 传入一个数组对象，根据某一相同value合并成新的数组
+ */
+interface paramsObj {
+	value?:any
+}
+export const handlerDatas = (arr:[], value:string) => {
+	let obj = {};
+	arr.forEach((item:paramsObj, index) => {
+		let { value } = item;
+		if (!obj[value]) {
+			obj[value] = {
+				value,
+				children:[]
+			}
+		}
+		obj[value].children.push(item);
+	});
+	return Object.values(obj); // 最终输出
+  }
+
+/**
+*传入一个数组，切割中国省份字符串，只保留名称; 省，市，自治区等字符去除 
+*/
+interface provincePros {
+	name: string,
+	value: number
+}
+export const getProvinceParams = (arr:provincePros[])=>arr.map(({name,value})=>[4,6].includes(name.length)?{name: name.slice(0,3),value}:{name: name.slice(0,2),value})
+// export const getProvinceParams = (arr:provincePros[]) => {
+// 	return arr.map(item=>{
+// 		if(item.name.length === 4 || item.name.length === 6){
+// 			return {
+// 				name:item.name.slice(0, 3),
+// 				value: item.value
+// 			}
+// 		}else {
+// 			return {
+// 				name: item.name.slice(0, 2),
+// 				value: item.value
+// 			}
+// 		}
+// 	})
+// }
+
+// export function useFetchState(props:any) {
+//   const focus = useRef(false);
+//   const [state, setState] = useState(props);
+//   useEffect(() => {
+// 	focus.current = true
+// 	  return () => {
+// 		focus.current = false
+// 	  }
+//   }, [])
+//   const setFetchState = useCallback((params) => {
+//     focus.current && setState(params);
+//   }, []);
+//   return [state, setFetchState];
+// }
