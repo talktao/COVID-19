@@ -2,22 +2,11 @@ import React,{ useState, useEffect } from 'react'
 import { Row, ScreenContainer } from 'components/lib'
 import { Table, Tag, Button, Col } from 'antd';
 import styled from '@emotion/styled';
-import ChinaMap from 'pages/home/ChinaMap';
+import ChinaMap from 'pages/home/chinaMap';
 import { httpGet } from 'utils/http';
+import { DataProps } from 'types/localCases';
 
-export interface DataProps {
-    city: string,
-    province: string,
-    confirmAdd: number,
-    nowConfirm: number,
-    confirm: number,
-    heal: number,
-    dead: number,
-    grade: string,
-    syear: number,
-    sdate: string,
-    date: string,
-}
+
 
 const LocalCases: React.FC = () => {
 
@@ -106,12 +95,12 @@ const LocalCases: React.FC = () => {
                     </a>
                 </Col>
             </Row>
-            <Row between={true} gap={2}>
+            <Row between={true} gap={2} marginBottom={2}>
                 <Col>
                     <Table 
-                            columns={columns} 
-                            dataSource={dataSource.sort((a,b) => b.confirmAdd - a.confirmAdd)} 
-                        />
+                        columns={columns} 
+                        dataSource={dataSource.sort((a,b) => b.confirmAdd - a.confirmAdd)}      
+                    />
                 </Col>
                 <Col>
                     <ChinaMap/>

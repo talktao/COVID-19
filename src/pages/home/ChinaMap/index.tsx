@@ -1,19 +1,15 @@
+/* 中国地图数据切换 */
 import React,{ useState, useEffect, useRef, useContext } from 'react'
 import * as echarts from 'echarts';
 import { Radio } from 'antd'
-import Map from "assets/json/china.json";
-import { NowContext, nowDataProps, TotalContext } from 'pages/home';
-
-interface confirmRefProps {
-  name: string,
-  value: number
-}
+import { NowContext, TotalContext } from 'pages/home';
+import { nowDataProps } from 'types/chinaMap';
 
 const ChinaMap: React.FC = () => {
 
     const [isNow, setIsNow] = useState(true) // 判断是否是现存确诊
 
-    echarts.registerMap("china", { geoJSON: Map });
+    echarts.registerMap("china", require("assets/json/china.json"));
 
     const confirmRef = useRef({}) // 累计确诊数据
     const chinaMapRef = useRef(null)
@@ -21,13 +17,12 @@ const ChinaMap: React.FC = () => {
     let chartInstance = null;
 
     const nowData = useContext(NowContext)
-    const totalData = useContext(TotalContext)
-
-    
+    const totalData = useContext(TotalContext) 
       
     useEffect(() => {
       getCityList()  
     }, [])
+
 
      // 获取各省数据
     const getCityList = async () => {
@@ -35,12 +30,13 @@ const ChinaMap: React.FC = () => {
       const data = await result.json()
       const listData = data.data.areaTree[0].children.map((item:nowDataProps)=>({name:item.name, value: item.total.nowConfirm})) // 获取现有确诊人数数据
       confirmRef.current = listData
-      initChart()     
+      initChart(isNow)     
     } 
 
-    const initChart = () => {
+    const initChart = (target?:boolean) => {
+
       const myChart = echarts.getInstanceByDom(chinaMapRef.current as unknown as HTMLDivElement);
-      chartInstance = myChart ? myChart : echarts.init(chinaMapRef.current as unknown as HTMLDivElement) //图标实例
+      chartInstance = myChart ? myChart : echarts.init(chinaMapRef.current as unknown as HTMLDivElement) //图表实例
       let option:any = {
         title: {
           text: "全国疫情地图",
@@ -51,7 +47,11 @@ const ChinaMap: React.FC = () => {
         },
         tooltip: { // 提示框c
           trigger: "item",
-          formatter: "省份: {b} <br/> 累计确诊：{c}" // a 系列名称 b 区域名称 c 合并数值
+          formatter: (p:any) => {       
+            return p.data ? '省份：' + [p.data.name] + `${target ? '<br/>现存确诊：' :  '<br/>累计确诊：'}` + [p.data.value] 
+                                 :  [p.name]
+          }
+          // formatter: "省份: {b} <br/> 累计确诊：{c}" // a 系列名称 b 区域名称 c 合并数值
         },
         series: [
           {
@@ -62,12 +62,12 @@ const ChinaMap: React.FC = () => {
               show: true,
               color: "black",
               fontStyle: 10,
-              align: "center",
+              align: "left",
             },
             zoom: 1.2, // 当前缩放比例
             roam: true, // 是否支持拖拽
             itemStyle: {
-              borderColor: "#ccc", // 区域边框线
+              borderColor: '#ccc', // 区域边框线
               borderWidth: 1
             },
             emphasis: { // 高亮显示
@@ -105,7 +105,7 @@ const ChinaMap: React.FC = () => {
     const handleMapChange = (e:any) => {
       setIsNow(e.target.value)
       confirmRef.current = e.target.value ? nowData : totalData 
-      initChart()
+      initChart(e.target.value)
     }
 
     return (

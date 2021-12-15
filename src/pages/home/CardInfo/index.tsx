@@ -2,8 +2,8 @@ import React from 'react'
 import { Card, Col } from 'antd'
 import { Row, ScreenContainer, toYMDHMS } from "components/lib";
 import styled from "@emotion/styled";
-import { PreDayProps, TotalProps } from 'pages/home';
 import { useCharAt } from 'utils';
+import { PreDayProps, TotalProps } from 'types/cardInfo';
 
 type Props = {
     chinaAdd: Partial<PreDayProps> ;
@@ -12,8 +12,6 @@ type Props = {
 
 const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
 
-    // const {chinaAdd, chinaTotal} = props
-    // const [time, setTime] = useState(new Date())
     let time = new Date()
 
     return (

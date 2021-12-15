@@ -18,7 +18,7 @@ const Main: React.FC = (props) => {
     const toggle  = () => {
         setCollapsed(!collapsed)
     }
-    
+     
     return (
         <>
             <Layout>

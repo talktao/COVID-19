@@ -143,7 +143,7 @@ export const useCharAt = (param?: Number | String) => {
  * 传入一个数组对象，根据某一相同value合并成新的数组
  */
 interface paramsObj {
-	value?:any
+	value?: any
 }
 export const handlerDatas = (arr:[], value:string) => {
 	let obj = {};
