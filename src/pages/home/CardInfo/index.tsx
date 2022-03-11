@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Col } from 'antd'
-import { Row, ScreenContainer, toYMDHMS } from "components/lib";
+import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { useCharAt } from 'utils';
+import { toYMDHMS, useCharAt } from 'utils';
 import { PreDayProps, TotalProps } from 'types/cardInfo';
 
 type Props = {
@@ -15,7 +15,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
     let time = new Date()
 
     return (
-        <ScreenContainer>
+        <>
             <Row marginBottom={2} gap={2}>
                 <Col>截止 {toYMDHMS(time)}</Col>
                 <Col>
@@ -25,7 +25,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                 </Col>
             </Row>
             <Row between={true} gap={2}>
-                <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
+                <Col xs={12} sm={6} md={3} lg={3} xl={3} xxl={3}>
                     <Card style={{background:"#fffaf7"}}>
                         <PreStyle>
                             <span>较上日</span>
@@ -39,7 +39,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                         <p>本土现有确诊</p>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
+                <Col xs={12} sm={6} md={3} lg={3} xl={3} xxl={3}>
                     <Card style={{background:"#fff8f8"}}>
                         <PreStyle>
                             <span>较上日</span>
@@ -53,7 +53,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                         <p>现有确诊</p>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
+                <Col xs={12} sm={6} md={3} lg={3} xl={3} xxl={3}>
                     <Card style={{background:"#fff4f4"}} >
                         <PreStyle>
                             <span>较上日</span>
@@ -67,7 +67,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                         <p>累计确诊</p>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
+                <Col xs={12} sm={6} md={3} lg={3} xl={3} xxl={3}>
                     <Card  style={{background:"#fef7ff"}}>
                         <PreStyle>
                             <span>较上日</span>
@@ -80,7 +80,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                         <p>无症状感染者</p>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
+                <Col xs={12} sm={6} md={3} lg={3} xl={3} xxl={3}>
                     <Card style={{background:"#f1f5ff"}}>
                         <PreStyle>
                             <span>较上日</span>
@@ -94,7 +94,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                         <p>境外输入</p>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={3} lg={3} xl={3} xxl={3}>
+                <Col xs={12} sm={6} md={3} lg={3} xl={3} xxl={3}>
                     <Card style={{background:"#f3f6f8"}}>
                         <PreStyle>
                             <span>较上日</span>
@@ -109,7 +109,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                     </Card>
                 </Col>
             </Row>
-        </ScreenContainer>
+        </>
     )
 }
 export default CardInfo
