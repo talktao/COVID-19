@@ -10,23 +10,29 @@ const AddConfirmTrend = ({localConfirmAdd, localConfirm}:{localConfirmAdd:localC
 
     const [isAdd, setIsAdd] = useState(true) // 是否是本土新增，否则是本土现有
 
+    // const [optionObj, setOptionObj] = useState({})
+    // const addConfirmTrend = useRef(null)
+
     let chartInstance:any
     
     let initChart = (trg?:any) => {
-      chartInstance = echarts.init(document.getElementById('main2') as HTMLDivElement); // 图表实例
+      chartInstance = echarts.init(document.getElementById('addConfirmTrend') as HTMLDivElement); // 图表实例
         let option: any = {
             title: {
                 text: trg ? '本土新增确诊趋势' : '本土现有确诊趋势'
               },
               tooltip: {
                 trigger: 'axis',
+                textStyle:{
+                  align:'left'
+              }
               },
               legend: {
                 data: [{
                   name: trg ? '本土新增确诊' : '本土现有确诊',
                   // 强制设置图形为圆。
                   icon: 'rect',
-                  // 设置文本为红色
+                  // 设置文本为黑色
                   textStyle: {
                       color: '#000'
                   }
@@ -54,22 +60,19 @@ const AddConfirmTrend = ({localConfirmAdd, localConfirm}:{localConfirmAdd:localC
                 {
                     name: trg ? '本土新增确诊' : '本土现有确诊',
                     type: 'line',
-                    smooth: true,
                     data: trg ? localConfirmAdd.map((item:any)=>item.localConfirmadd) : localConfirm.map((item:any)=>item.localConfirm),
-                    label: {
-                      align: 'left',
-                    },
                     itemStyle: {
-                        color:'#e57631',   
+                        color: trg ? '#e57631' : '#f06061',   
                         borderWidth: 1 ,
                         borderType: 'solid'
                     },
                     lineStyle: {
-                        color:'#e57631'
+                        color: trg ? '#e57631' : '#f06061'
                     }
                 },
               ]
         };
+        // setOptionObj(option)
         chartInstance.setOption(option);
     };
     
@@ -82,9 +85,9 @@ const AddConfirmTrend = ({localConfirmAdd, localConfirm}:{localConfirmAdd:localC
 
     // 切换折线图数据
     const handleLineChange = (e:any) => {
-      chartInstance.dispose() // 切换时清除上次图表实例
-      setIsAdd(e.target.value) 
-      initChart(e.target.value)
+        chartInstance.dispose() // 切换时清除上次图表实例
+        setIsAdd(e.target.value)
+        initChart(e.target.value)
     }
 
     return(
@@ -93,16 +96,17 @@ const AddConfirmTrend = ({localConfirmAdd, localConfirm}:{localConfirmAdd:localC
               <RadioButtonStyle value={true}>本土新增确诊趋势</RadioButtonStyle>
               <RadioButtonStyle value={false}>本土现有确诊趋势</RadioButtonStyle>
             </RadioGroupStyle>
-            <div id={'main2'} style={{width:850,height:600}}/>
+            <div id={'addConfirmTrend'} style={{width:800,height:600}}/>
+            {/* <CostomEcharts currentRef={addConfirmTrend} style={{width:800,height:600}} option={optionObj} param={isAdd} /> */}
         </div>
     )
 }
 export default AddConfirmTrend
 
-const RadioGroupStyle = styled(Radio.Group)`
+export const RadioGroupStyle = styled(Radio.Group)`
   padding: 20px 0;
 `
-const RadioButtonStyle = styled(Radio.Button)`
+export const RadioButtonStyle = styled(Radio.Button)`
   margin-right: 20px;
   color: cadetblue;
   &:hover{
