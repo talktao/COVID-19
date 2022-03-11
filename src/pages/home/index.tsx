@@ -15,6 +15,7 @@ import { nowDataProps } from "types/chinaMap";
 /* ChinaMap组件使用 */
 export const NowContext = createContext({})  // 各省份（直辖市）现存确诊人数数据
 export const TotalContext = createContext({}) // 各省份（直辖市）累计确诊人数数据
+// export const TotalContext = createContext({}) // 各省份（直辖市）累计确诊人数数据
 
 const Home : React.FC =  () => {
     const [chinaAdd, setChinaAdd] = useState<Partial<PreDayProps>>({})  // 较昨日新增数据
@@ -47,7 +48,6 @@ const Home : React.FC =  () => {
         chinaAdd.nowConfirm = data[1].nowConfirm - data[0].nowConfirm
         setChinaAdd(chinaAdd)
         
-
         // 本土新增数据趋势数据
         const localConfirmAdd = result.data.chinaDayAddList.map((item:localConfirmAddProps)=>({localConfirmadd:item.localConfirmadd, date:item.date}))
         setLocalConfirmAdd(localConfirmAdd)
@@ -82,38 +82,40 @@ const Home : React.FC =  () => {
     const getOnsInfo = async () => {
         const result = await fetch('https://mock.yonyoucloud.com/mock/22022/COVID-19/getOnsInfo/list')
         const data = await result.json()
+        console.log(data,'datadata');
+        
         const listData = data.data.areaTree[0].children.map((item:nowDataProps)=>({name:item.name, value: item.total.nowConfirm})) // 获取现有确诊人数数据
-        const totallist = data.data.areaTree[0].children.map((item:nowDataProps)=>({name:item.name, value: item.total.confirm}))  // 获取累计确诊人数数据
+        const totalList = data.data.areaTree[0].children.map((item:nowDataProps)=>({name:item.name, value: item.total.confirm}))  // 获取累计确诊人数数据
+        console.log(totalList,'totalList');
+        
         setNowData(listData)
-        setTotalData(totallist)
+        setTotalData(totalList)
     }
 
-    
     return(
         <>
-            <Row>
-                <Col xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:24}} xl={{span:24}} xxl={{span:24}}>
-                    <CardInfo chinaAdd={chinaAdd} chinaTotal={chinaTotal} />
-                    <NowContext.Provider value={nowData}>
-                        <TotalContext.Provider value={totalData} >
-                            <LocalCases />
-                        </TotalContext.Provider>
-                    </NowContext.Provider>
-                </Col>
-                
-            </Row>
+            <ScreenContainer>
+                <CardInfo chinaAdd={chinaAdd} chinaTotal={chinaTotal} />
+            </ScreenContainer>
+
+            <ScreenContainer marginTop={2}>
+                <NowContext.Provider value={nowData}>
+                    <TotalContext.Provider value={totalData} >
+                        <LocalCases />
+                    </TotalContext.Provider>
+                </NowContext.Provider>
+            </ScreenContainer>
+            
             <ScreenContainer marginTop={2}>
                 <Row between={true} gap={2} marginBottom={2}>
                     <Col>
                         <AddConfirm localConfirmAdd={localConfirmAdd} localConfirm={localConfirm} />
                     </Col>
                     <Col>
-                        {/* <ChinaTrend/> */}
                         <ChinaTrend nowTrend={nowTrend} addTrend={addTrend} totalTrend={totalTrend} natality={natality} />
                     </Col>
                 </Row>
             </ScreenContainer>
-            
         </>
     );
 };
