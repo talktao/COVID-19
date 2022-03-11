@@ -60,20 +60,21 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 	return null
 }
 
+// padding为0的按钮
 export const ButtonNoPadding = styled(Button)`
 	padding: 0;
 `
+/* echarts 公共配置 */
+export const legendData = {icon: 'rect', textStyle: { color: '#000' }} // 抽出折线图公共分类类型样式
 
+export const healConfig = {itemStyle: {color:'#65b379', borderWidth: 1 ,borderType: 'solid'},lineStyle: {color:'#65b379'}} // 抽出折线图治愈类型样式
 
+export const deadConfig = {itemStyle: {color:'#87878b',   borderWidth: 1 ,borderType: 'solid'},lineStyle: {color:'#87878b'}} // 抽出折线图死亡类型样式
 
-export const toYMDHMS = (date: any) => {	
-    if (!date) {
-        return "";
-    }
-    date = new Date(date);
-    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
-        .getDate()
-        .toString()
-        .padStart(2, "0")} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
-};
+export const suspectConfig = {itemStyle: {color:'#ffd661',   borderWidth: 1 ,borderType: 'solid'},lineStyle: {color:'#ffd661'}} // 抽出折线图新增疑似类型样式
+
+export const confirmConfig = {itemStyle: {color:'#f06061',   borderWidth: 1 ,borderType: 'solid'},lineStyle: {color:'#f06061'}} // 抽出折线图新增确诊类型样式
+
+export const nowConfirmConfig = {itemStyle: {color:'#ff7b7c',   borderWidth: 1 ,borderType: 'solid'},lineStyle: {color:'#ff7b7c'}} // 抽出折线图全国现有确诊类型样式（以及本土新增确诊）
+
+export const totalConfirmConfig = {itemStyle: {color:'#9b0a0e',   borderWidth: 1 ,borderType: 'solid'},lineStyle: {color:'#9b0a0e'}} // 抽出折线图全国累计确诊类型样式
