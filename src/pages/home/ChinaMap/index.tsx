@@ -1,9 +1,9 @@
 /* 中国地图数据切换 */
 import React,{ useState, useEffect, useRef, useContext } from 'react'
 import * as echarts from 'echarts';
-import { Radio } from 'antd'
 import { NowContext, TotalContext } from 'pages/home';
 import { nowDataProps } from 'types/chinaMap';
+import { RadioButtonStyle, RadioGroupStyle } from '../addConfirmTrend';
 
 const ChinaMap: React.FC = () => {
 
@@ -21,8 +21,7 @@ const ChinaMap: React.FC = () => {
       
     useEffect(() => {
       getCityList()  
-    }, [])
-
+    },[])
 
      // 获取各省数据
     const getCityList = async () => {
@@ -47,11 +46,13 @@ const ChinaMap: React.FC = () => {
         },
         tooltip: { // 提示框c
           trigger: "item",
+          textStyle:{
+            align:'left'
+          },
           formatter: (p:any) => {       
             return p.data ? '省份：' + [p.data.name] + `${target ? '<br/>现存确诊：' :  '<br/>累计确诊：'}` + [p.data.value] 
                                  :  [p.name]
           }
-          // formatter: "省份: {b} <br/> 累计确诊：{c}" // a 系列名称 b 区域名称 c 合并数值
         },
         series: [
           {
@@ -103,18 +104,18 @@ const ChinaMap: React.FC = () => {
 
     // 切换地图（现存确诊，累计确诊）
     const handleMapChange = (e:any) => {
-      setIsNow(e.target.value)
-      confirmRef.current = e.target.value ? nowData : totalData 
-      initChart(e.target.value)
+        setIsNow(e.target.value)
+        confirmRef.current = e.target.value ? nowData : totalData 
+        initChart(e.target.value)
     }
 
     return (
       <div>
-        <Radio.Group value={isNow} onChange={handleMapChange}>
-          <Radio.Button value={true}>现存确诊</Radio.Button>
-          <Radio.Button value={false}>累计确诊</Radio.Button>
-        </Radio.Group>
-        <div id={'main'} style={{width:600,height:800}} ref={chinaMapRef} />
+        <RadioGroupStyle value={isNow} onChange={handleMapChange}>
+            <RadioButtonStyle value={true}>现存确诊</RadioButtonStyle>
+            <RadioButtonStyle value={false}>累计确诊</RadioButtonStyle>
+        </RadioGroupStyle>
+        <div style={{width:800,height:800}} ref={chinaMapRef} />
       </div>
     )    
 }

@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react'
-import { Row, ScreenContainer } from 'components/lib'
+import { Row } from 'components/lib'
 import { Table, Tag, Button, Col } from 'antd';
 import styled from '@emotion/styled';
 import ChinaMap from 'pages/home/chinaMap';
@@ -80,8 +80,8 @@ const LocalCases: React.FC = () => {
     ]
 
     return (
-        <ScreenContainer marginTop={2}>
-            <Row between={true} gap={2} marginBottom={2}>
+        <>
+            <Row between={true} gap={2} marginBottom={1}>
                 <Col>
                     近期31省市区本土病例
                      <a style={{marginLeft:'20px'}} href='https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=statisGradeCityDetail'>
@@ -95,7 +95,7 @@ const LocalCases: React.FC = () => {
                     </a>
                 </Col>
             </Row>
-            <Row between={true} gap={2} marginBottom={2}>
+            <Row between={true} gap={2} marginBottom={1}>
                 <Col>
                     <Table 
                         columns={columns} 
@@ -103,10 +103,10 @@ const LocalCases: React.FC = () => {
                     />
                 </Col>
                 <Col>
-                    <ChinaMap/>
+                    <ChinaMap />
                 </Col>
            </Row>
-        </ScreenContainer>
+        </>
     )
 }
 export default LocalCases
