@@ -163,11 +163,11 @@ export const handlerDatas = (arr:[], value:string) => {
 /**
 *传入一个数组，切割中国省份字符串，只保留名称; 省，市，自治区等字符去除 
 */
-interface provincePros {
+interface provinceProps {
 	name: string,
 	value: number
 }
-export const getProvinceParams = (arr:provincePros[])=>arr.map(({name,value})=>[4,6].includes(name.length)?{name: name.slice(0,3),value}:{name: name.slice(0,2),value})
+export const getProvinceParams = (arr:provinceProps[])=>arr.map(({name,value})=>[4,6].includes(name.length)?{name: name.slice(0,3),value}:{name: name.slice(0,2),value})
 // export const getProvinceParams = (arr:provincePros[]) => {
 // 	return arr.map(item=>{
 // 		if(item.name.length === 4 || item.name.length === 6){
@@ -184,17 +184,15 @@ export const getProvinceParams = (arr:provincePros[])=>arr.map(({name,value})=>[
 // 	})
 // }
 
-// export function useFetchState(props:any) {
-//   const focus = useRef(false);
-//   const [state, setState] = useState(props);
-//   useEffect(() => {
-// 	focus.current = true
-// 	  return () => {
-// 		focus.current = false
-// 	  }
-//   }, [])
-//   const setFetchState = useCallback((params) => {
-//     focus.current && setState(params);
-//   }, []);
-//   return [state, setFetchState];
-// }
+
+export const toYMDHMS = (date: any) => {	
+    if (!date) {
+        return "";
+    }
+    date = new Date(date);
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString()
+        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
+};
