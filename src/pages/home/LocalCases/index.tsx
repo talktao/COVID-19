@@ -39,20 +39,21 @@ const LocalCases: React.FC = () => {
     }
 
     const columns = [
-        {
+        {          
             title: '城市(区)',
             dataIndex: 'city',
         },
-        {
+        {         
             title: '省市区',
             dataIndex: 'province',
         },
         {
+           
             title: '新增',
             dataIndex: 'confirmAdd',
             render: (text:number) => <>{text === 0 ? <TagStyle color="default" >{text}</TagStyle> : <TagStyle color="red">+{text}</TagStyle>}</>
         },
-        {
+        {            
             title: '现有确诊',
             dataIndex: 'nowConfirm',
         },
@@ -71,12 +72,8 @@ const LocalCases: React.FC = () => {
         {
             title: '区域风险',
             dataIndex: 'grade',
-        },
-        {
-            title:'详情',
-            dataIndex: "operation",
             render: (text:any, rowData:object)=><><Button onClick={()=>handleDetail(rowData)}>详情</Button></>
-        }
+        },
     ]
 
     return (
@@ -89,20 +86,20 @@ const LocalCases: React.FC = () => {
                     </a>
                 </Col>
 
-                <Col>
+                <Col span={10}>
                     <a href='https://mock.yonyoucloud.com/mock/22022/COVID-19/getOnsInfo/list'>
                         数据来源:https://mock.yonyoucloud.com/mock/22022/COVID-19/getOnsInfo/list
                     </a>
                 </Col>
             </Row>
             <Row between={true} gap={2} marginBottom={1}>
-                <Col>
+                <Col span={13}>
                     <Table 
                         columns={columns} 
                         dataSource={dataSource.sort((a,b) => b.confirmAdd - a.confirmAdd)}      
                     />
                 </Col>
-                <Col>
+                <Col span={10}>
                     <ChinaMap />
                 </Col>
            </Row>
