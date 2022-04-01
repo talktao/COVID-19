@@ -10,6 +10,7 @@ type Props = {
     chinaTotal: Partial<TotalProps>;
 };
 
+
 const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
 
     let time = new Date()
@@ -31,7 +32,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                             <span>较上日</span>
                             {
                                 useCharAt(chinaAdd.localConfirmadd) === "-" ? <span style={{color:'#e57631'}}>{chinaAdd.localConfirmadd}</span>
-                                                                           : <span style={{color:'#e57631'}}>+{chinaAdd.localConfirmadd}</span>
+                                                                            : <span style={{color:'#e57631'}}>+{chinaAdd.localConfirmadd}</span>
                             }
                             
                         </PreStyle>
@@ -45,7 +46,7 @@ const CardInfo : React.FC<Props> = ({chinaAdd, chinaTotal}) => {
                             <span>较上日</span>
                             {
                                 useCharAt(chinaAdd.nowConfirm) === "-" ? <span style={{color:'#e61c1d'}}>{chinaAdd.nowConfirm}</span>
-                                                                      : <span style={{color:'#e61c1d'}}>+{chinaAdd.nowConfirm}</span>
+                                                                       : <span style={{color:'#e61c1d'}}>+{chinaAdd.nowConfirm}</span>
                             }
                             
                         </PreStyle>
