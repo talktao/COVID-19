@@ -27,13 +27,10 @@ const nav = (path:string) => {
                 }
                 <MenuStyle mode="inline" defaultSelectedKeys={['1']}>
                     <MenuItemStyle key="1" onClick={() => nav("/main/home")} icon={<FundOutlined />}>
-                        疫情数据
+                        全国疫情数据
                     </MenuItemStyle>
-                    <MenuItemStyle key="2" onClick={() => nav("/main/worldMap")} icon={<PieChartOutlined />}>
-                        疫情分布
-                    </MenuItemStyle>
-                    <MenuItemStyle key="3" onClick={() => nav("/main/welcome")}  icon={<StockOutlined />}>
-                        疫情趋势
+                    <MenuItemStyle key="2" onClick={() => nav("/main/province")} icon={<PieChartOutlined />}>
+                        省份疫情数据
                     </MenuItemStyle>
                 </MenuStyle>
             </>
