@@ -10,7 +10,8 @@ export const httpPost = async (url:string, data:object) => {
         headers:{
             'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'/* 请求内容类型 */
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        mode: 'no-cors'
     })
     return result.json()
 }
