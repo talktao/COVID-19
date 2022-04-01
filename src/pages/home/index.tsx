@@ -2,7 +2,7 @@ import React, {useState, useEffect, createContext} from "react";
 import CardInfo from "pages/home/cardInfo";
 import LocalCases from "pages/home/localCases"
 import { Col} from "antd";
-import { httpGet } from "utils/http";
+import { httpGet, httpPost } from "utils/http";
 import AddConfirm from "./addConfirmTrend";
 import ChinaTrend from "./chinaTrend";
 import { Row, ScreenContainer } from 'components/lib'
@@ -58,22 +58,18 @@ const Home : React.FC =  () => {
         
         // 全国现有确诊趋势
         const nowTrend = result.data.chinaDayList.map((item: nowTrendProps)=>({nowConfirm: item.nowConfirm, date:item.date}))
-        console.log(nowTrend,'nowTrend');
         setNowTrend(nowTrend)
 
         // 全国疫情新增趋势
         const addTrend = result.data.chinaDayAddList.map((item:addTrendProps)=>({confirm: item.confirm, suspect: item.suspect, date: item.date}))
-        console.log(addTrend,'addTrend');
         setAddTrend(addTrend)
         
         // 全国疫情累计趋势
         const totalTrend = result.data.chinaDayList.map((item:totalTrendProps)=>({confirm: item.confirm, heal: item.heal, dead: item.dead, date: item.date}))
-        console.log(totalTrend,'totalTrend');
         setTotalTrend(totalTrend)
 
         // 治愈率，病死率
         const natality = result.data.chinaDayList.map((item:natalityProps)=>({healRate: item.healRate, deadRate: item.deadRate, date: item.date}))
-        console.log(natality,'natality');
         setNatality(natality)
         
     }
@@ -81,12 +77,9 @@ const Home : React.FC =  () => {
     // 获取疫情信息数据
     const getOnsInfo = async () => {
         const result = await fetch('https://mock.yonyoucloud.com/mock/22022/COVID-19/getOnsInfo/list')
-        const data = await result.json()
-        console.log(data,'datadata');
-        
+        const data = await result.json()   
         const listData = data.data.areaTree[0].children.map((item:nowDataProps)=>({name:item.name, value: item.total.nowConfirm})) // 获取现有确诊人数数据
         const totalList = data.data.areaTree[0].children.map((item:nowDataProps)=>({name:item.name, value: item.total.confirm}))  // 获取累计确诊人数数据
-        console.log(totalList,'totalList');
         
         setNowData(listData)
         setTotalData(totalList)
